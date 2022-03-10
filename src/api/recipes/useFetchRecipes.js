@@ -4,7 +4,7 @@ import {addRecipes} from '../../redux/actions';
 //import {API_URL, API_TOKEN} from '@env';
 // const { getAllRecipes } = useFetchRecipes()
 
-const URL_API = 'https://api.spoonacular.com/recipes/complexSearch';
+const BASE_URL_API = 'https://api.spoonacular.com/recipes';
 const API_KEY = '74d7f1d00bdf46fcbc66bd39123fb7ec';
 const MAX_PER_PAGE = 30;
 
@@ -19,7 +19,7 @@ export const useFetchRecipes = () => {
   //on recupere les recettes du serveur
   const getAllRecipes = async () => {
     try {
-      const response = await axios.get(URL_API, {
+      const response = await axios.get(`${BASE_URL_API}/complexSearch`, {
         params: {
           apiKey: API_KEY,
           number: MAX_PER_PAGE,
@@ -30,6 +30,19 @@ export const useFetchRecipes = () => {
       dispatch(addRecipes(response.data.results));
     } catch (e) {
       console.error('Error in getAllRecipes', e);
+    }
+  };
+
+  const getRecipeById = async id => {
+    try {
+      const response = await axios.get(`${BASE_URL_API}/${id}/information`, {
+        params: {
+          apiKey: API_KEY,
+        },
+      });
+      console.log('response= ', response);
+    } catch (e) {
+      console.error('Erro in getRecipeById', e);
     }
   };
 
