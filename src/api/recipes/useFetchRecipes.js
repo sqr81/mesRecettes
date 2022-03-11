@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {useDispatch} from 'react-redux';
-import {addRecipes} from '../../redux/actions';
+import {addRecipes, selectedRecipe} from '../../redux/actions';
 //import {API_URL, API_TOKEN} from '@env';
 // const { getAllRecipes } = useFetchRecipes()
 
@@ -40,7 +40,8 @@ export const useFetchRecipes = () => {
           apiKey: API_KEY,
         },
       });
-      console.log('response= ', response);
+      console.log('response= ', response.data);
+      dispatch(selectedRecipe(response.data))
     } catch (e) {
       console.error('Erro in getRecipeById', e);
     }
@@ -48,5 +49,6 @@ export const useFetchRecipes = () => {
 
   return {
     getAllRecipes,
+    getRecipeById
   };
 };
