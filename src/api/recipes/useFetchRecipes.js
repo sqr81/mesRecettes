@@ -17,12 +17,13 @@ export const useFetchRecipes = () => {
   })*/
 
   //on recupere les recettes du serveur
-  const getAllRecipes = async () => {
+  const getAllRecipes = async (page) => {
     try {
       const response = await axios.get(`${BASE_URL_API}/complexSearch`, {
         params: {
           apiKey: API_KEY,
           number: MAX_PER_PAGE,
+          offset: page * MAX_PER_PAGE
         },
       });
       // eslint-disable-next-line prettier/prettier
@@ -33,6 +34,7 @@ export const useFetchRecipes = () => {
     }
   };
 
+  //on recupere une recette
   const getRecipeById = async id => {
     try {
       const response = await axios.get(`${BASE_URL_API}/${id}/information`, {
@@ -40,15 +42,17 @@ export const useFetchRecipes = () => {
           apiKey: API_KEY,
         },
       });
+
       console.log('response= ', response.data);
       dispatch(selectedRecipe(response.data))
     } catch (e) {
-      console.error('Erro in getRecipeById', e);
+      console.error('Error in getRecipeById', e);
     }
   };
 
+
   return {
     getAllRecipes,
-    getRecipeById
+    getRecipeById,
   };
 };
