@@ -11,3 +11,4 @@ export function getTasks(store){
 } */
 export const getCompletedTasks = store =>
   store.tasksList.filter(task => task.completed);
+
